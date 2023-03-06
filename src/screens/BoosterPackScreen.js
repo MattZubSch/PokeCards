@@ -3,11 +3,13 @@ import React from 'react'
 
 import Card from '../components/Card'
 
-const BoosterPackScreen = () => {
+const BoosterPackScreen = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.touchableContainer}>
+        <TouchableOpacity 
+        style={styles.touchableContainer}
+        onPress={() => {navigation.navigate('OpenPackScreen')}}>
           <Card style={styles.cardContainer}>
               <Text style={styles.text}>Sobre Gratuito</Text>
           </Card>

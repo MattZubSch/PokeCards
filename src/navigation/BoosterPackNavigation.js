@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import HomeScreen from '../screens/HomeScreen'
 import BoosterPackScreen from '../screens/BoosterPackScreen'
+import OpenPackScreen from '../screens/OpenPackScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -15,6 +16,7 @@ const BoosterPackNavigation = () => {
                 <Stack.Screen name='Home' component={HomeScreen} options={{
                     title: "Pokecards"}}/>
                 <Stack.Screen name='BoosterPackScreen' component={BoosterPackScreen} />
+                <Stack.Screen name='OpenPackScreen' component={OpenPackScreen} />
             </Stack.Navigator>
         </NavigationContainer>
 
