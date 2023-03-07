@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './src/screens/HomeScreen';
 import BoosterPackNavigation from './src/navigation/BoosterPackNavigation';
 
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+
+import { Provider } from 'react-redux';
+import store from "./src/store";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -15,7 +17,9 @@ export default function App() {
   if (!loaded) return <AppLoading />
   
   return (
-     <BoosterPackNavigation style={styles.container} />
+    <Provider store={store}>
+      <BoosterPackNavigation style={styles.container} />
+    </Provider>
      
   );
 }

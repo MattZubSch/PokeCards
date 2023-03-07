@@ -4,9 +4,6 @@ import Card from './Card'
 import Colors from '../constants/Colors'
 
 const PokemonCard = ({item}) => {
-    const typeColor = () => {
-        return item.colorType
-    }
     
 
   return (
@@ -18,11 +15,11 @@ const PokemonCard = ({item}) => {
             <Image 
             style={styles.img}
             source={{
-                uri: item.img
+                uri: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/'+item.pokedexNum+'.png'
             }}/>
         </View>
         <View>
-            <Text>{item.pokedexNum}</Text>
+            <Text>#{item.pokedexNum}</Text>
         </View>
         <View>
             <Card style={{...styles.cardContainer, ...{backgroundColor: item.colorType}}}>
@@ -40,6 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
+        justifyContent: "center",
         shadowColor: "black",
         flexDirection: "column",
     },
