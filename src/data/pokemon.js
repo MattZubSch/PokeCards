@@ -133,7 +133,6 @@ export const POKEMONS = [
         type: 'Psychic',
         colorType: Colors.psychic,
         pokedexNum: '063',
-        img: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/063.png'
     },
     {
         id: '20',

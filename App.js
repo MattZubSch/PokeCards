@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
-import BoosterPackNavigation from './src/navigation/BoosterPackNavigation';
+import { StyleSheet, Text, View } from 'react-native'
+import BoosterPackNavigation from './src/navigation/BoosterPackNavigation'
+import { NavigationContainer } from '@react-navigation/native'
 
-import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 
-import { Provider } from 'react-redux';
-import store from "./src/store";
+import { Provider } from 'react-redux'
+import store from './src/store'
 
 export default function App() {
   const [loaded] = useFonts({
@@ -18,7 +19,9 @@ export default function App() {
   
   return (
     <Provider store={store}>
+
       <BoosterPackNavigation style={styles.container} />
+
     </Provider>
      
   );
