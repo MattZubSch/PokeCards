@@ -8,39 +8,38 @@ import PokemonCard from '../components/PokemonCard'
 
 
 const OpenPackScreen = () => {
- 
-  const dispatch = useDispatch()
-  const pokemons = useSelector(state => state.packScreen.packs)
+
   const packFiltered = useSelector(state => state.packScreen.selected)
 
-
-  const generateRandom = () => { 
-      return Math.floor(Math.random() * (pokemons.length)).toString()
-      }
-   
- 
-  const packShow = generateRandom()  
-
-  useEffect(() => {
-  dispatch(selectedCards(packShow))
-  }, [])  
-  console.log(packFiltered)    
+  console.log(packFiltered)
 
   const renderPokemonCards = ({ item }) => (
-            <View>
-              <PokemonCard item={item} />
-            </View>
+    <View>
+      <PokemonCard item={item} />
+    </View>  
       ) 
-    
-  return (
-        <View style={styles.container}>
-              <FlatList
-                data={packFiltered}
-                renderItem={renderPokemonCards}
-                keyExtractor={item => item.id} 
-                horizontal={true} 
-              />
-        </View>
+      
+      if (!Array.isArray(packFiltered)) {
+        return (  
+          <View style={styles.container}>
+            <FlatList
+              data={[packFiltered]}
+              renderItem={renderPokemonCards}
+              keyExtractor={item => item.id} 
+              horizontal={true} 
+            />
+          </View>
+        )
+      }
+  return (  
+    <View style={styles.container}>
+      <FlatList
+        data={packFiltered}
+        renderItem={renderPokemonCards}
+        keyExtractor={item => item.id} 
+        horizontal={true} 
+      />
+    </View>
   )
 }
 
@@ -53,5 +52,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         shadowColor: "black",
+        padding: 60,
+        paddingBottom: 0,
+        paddingTop: 0
       },
 })

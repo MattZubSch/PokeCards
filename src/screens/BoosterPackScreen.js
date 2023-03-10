@@ -3,15 +3,49 @@ import React from 'react'
 
 import Card from '../components/Card'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { selectedCards, multipleCards, clearPack} from '../store/actions/packScreen.action'
+
 const BoosterPackScreen = ({navigation}) => {
+
+  const dispatch = useDispatch()
+  const pokemons = useSelector(state => state.packScreen.packs)
+
+  const generateRandom = () => { 
+    return Math.floor(Math.random() * (pokemons.length)).toString()
+  }
+
+  const lol = generateRandom()
+  console.log(lol)
+
+  // console.log(pokemons)
+  const handlerOpenPack = () => {
+    dispatch(selectedCards(generateRandom()))
+    navigation.navigate('OpenPackScreen')
+  }
+  const handlerX3Pack = () => {
+    dispatch(clearPack())
+    for (let i = 0; i < 3; i++) {
+      dispatch(multipleCards(generateRandom()))
+    }
+    navigation.navigate('OpenPackScreen')
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <TouchableOpacity 
         style={styles.touchableContainer}
-        onPress={() => {navigation.navigate('OpenPackScreen')}}>
+        onPress={handlerOpenPack}>
           <Card style={styles.cardContainer}>
               <Text style={styles.text}>Sobre Gratuito</Text>
+          </Card>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={styles.touchableContainer}
+        onPress={handlerX3Pack}>
+          <Card style={styles.cardContainer}>
+              <Text style={styles.text}>Sobre X3</Text>
           </Card>
         </TouchableOpacity>
       </View>
