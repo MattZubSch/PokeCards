@@ -1,35 +1,65 @@
+import React, {useEffect} from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { clearPack, multipleCards, selectedCards } from '../store/actions/packScreen.action'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Card from '../components/Card'
-
-import { useSelector, useDispatch } from 'react-redux'
-import { selectedCards, multipleCards, clearPack} from '../store/actions/packScreen.action'
 
 const BoosterPackScreen = ({navigation}) => {
 
   const dispatch = useDispatch()
   const pokemons = useSelector(state => state.packScreen.packs)
+  const packFiltered = useSelector(state => state.packScreen.selected)
 
+  // useEffect(() => {
+  // dispatch(clearPack())
+  // // console.log(packFiltered.length) 
+  // },[])
+  // // console.log(packFiltered) 
+  
   const generateRandom = () => { 
     return Math.floor(Math.random() * (pokemons.length)).toString()
   }
 
-  const lol = generateRandom()
-  console.log(lol)
 
-  // console.log(pokemons)
   const handlerOpenPack = () => {
-    dispatch(selectedCards(generateRandom()))
+    dispatch(clearPack())
+    let sort = generateRandom()
+      // console.log(sort)
+      console.log(pokemons[sort -1])
+    dispatch(selectedCards(sort))
     navigation.navigate('OpenPackScreen')
-  }
+  } 
+  
   const handlerX3Pack = () => {
     dispatch(clearPack())
+    let idRandom = []
     for (let i = 0; i < 3; i++) {
-      dispatch(multipleCards(generateRandom()))
-    }
-    navigation.navigate('OpenPackScreen')
-  }
+      let sort = generateRandom()
+      if (idRandom.includes(sort)) {
+        i--
+      } else {
+        idRandom.push(sort)
+      }}
+      for (let i = 0; i < idRandom.length; i++){
+        dispatch(multipleCards(idRandom[i]))
+      }
+      navigation.navigate('OpenPackScreen') 
+  } 
+         
+    //   if (packFiltered.length === 0){
+    //     dispatch(multipleCards(sort))
+    //   } else {
+    //     let check = packFiltered.findIndex(card => card.id === sort)
+    //     console.log(check)
+    //     console.log(packFiltered) 
+    //     if (check === -1) {
+    //       dispatch(multipleCards(sort))
+    //     }
+    //   }
+    // }
+    // navigation.navigate('OpenPackScreen')
+  
 
   return (
     <ScrollView>
@@ -81,8 +111,15 @@ touchableContainer: {
   width: '90%',
 },
 text: {
-  fontFamily: "GothicNewMedium",
-  fontSize: 24,
-  justifyContent: 'center'
+  text: {
+    fontFamily: "GothicNewMedium",
+    fontSize: 36,
+    justifyContent: 'center',
+    textShadowColor: 'black',
+    textShadowOffset: {width: 1, height: -1},
+    textShadowRadius: 10,
+    color: 'white',
+    padding: 5
+  }
 
 }})

@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, View } from 'react-native'
+
 import Card from './Card'
 import Colors from '../constants/Colors'
+import React from 'react'
 
 const PokemonCard = ({item}) => {
     
@@ -40,6 +41,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         shadowColor: "black",
         flexDirection: "column",
+        borderColor: "black",
+        borderRadius: 10,
+        borderWidth: 1,
+        marginLeft: 10,
+        marginRight: 10
     },
     img: {
         width: 300,

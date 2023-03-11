@@ -1,12 +1,12 @@
-import { POKEMONS } from "../../data/pokemon";
-import { SELECT_CARDS, MULTIPLE_CARDS, CLEAR_PACK } from "../actions/packScreen.action";
+import { CLEAR_PACK, MULTIPLE_CARDS, SELECT_CARDS } from "../actions/packScreen.action";
 
+import { POKEMONS } from "../../data/pokemon";
 
 const initialState = {
     packs: POKEMONS,
     selected: [],
 }
-
+ 
 const PackScreenReducer = (state = initialState, action) => {
     switch (action.type) {
         case SELECT_CARDS:
