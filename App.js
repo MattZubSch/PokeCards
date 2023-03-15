@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import BoosterPackNavigation from './src/navigation/BoosterPackNavigation'
 import { NavigationContainer } from '@react-navigation/native'
+import MainNavigation from './src/navigation'
 
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
@@ -19,8 +20,9 @@ export default function App() {
   
   return (
     <Provider store={store}>
-
-      <BoosterPackNavigation style={styles.container} />
+      <NavigationContainer>
+        <MainNavigation />
+      </NavigationContainer>
 
     </Provider>
      
@@ -35,3 +37,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+//https://pokecards-3239c-default-rtdb.firebaseio.com/

@@ -11,11 +11,7 @@ const BoosterPackScreen = ({navigation}) => {
   const pokemons = useSelector(state => state.packScreen.packs)
   const packFiltered = useSelector(state => state.packScreen.selected)
 
-  // useEffect(() => {
-  // dispatch(clearPack())
-  // // console.log(packFiltered.length) 
-  // },[])
-  // // console.log(packFiltered) 
+
   
   const generateRandom = () => { 
     return Math.floor(Math.random() * (pokemons.length)).toString()
@@ -25,8 +21,6 @@ const BoosterPackScreen = ({navigation}) => {
   const handlerOpenPack = () => {
     dispatch(clearPack())
     let sort = generateRandom()
-      // console.log(sort)
-      console.log(pokemons[sort -1])
     dispatch(selectedCards(sort))
     navigation.navigate('OpenPackScreen')
   } 

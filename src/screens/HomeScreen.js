@@ -5,6 +5,14 @@ import Card from '../components/Card'
 import Colors from '../constants/Colors'
 
 const HomeScreen = ({navigation}) => {
+  const arr = ['5', '10', '15']
+
+  if (!arr.includes('10') === false) {
+    console.log('entro')
+  } else {
+    console.log('no entro')
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>

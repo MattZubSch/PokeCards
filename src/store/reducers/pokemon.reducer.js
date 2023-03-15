@@ -5,8 +5,8 @@ const initialState = {
     selected: null
 }
 
-const PokemosReducer = (state = initialState, action) => {
+const PokemonsReducer = (state = initialState, action) => {
     return state
 }
 
-export default PokemosReducer
+export default PokemonsReducer

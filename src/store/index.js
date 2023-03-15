@@ -1,13 +1,16 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+
+import thunk from "redux-thunk";
 
 import CardListReducer from "./reducers/cardList.reducer";
 import PackScreenReducer from "./reducers/packScreen.reducer";
-import PokemosReducer from "./reducers/pokemon.reducer";
+import PokemonsReducer from "./reducers/pokemon.reducer";
 
 const RootReducer = combineReducers ({
     packScreen: PackScreenReducer,
     obtainedCards: CardListReducer,
-    pokemons: PokemosReducer,
+    pokemons: PokemonsReducer,
+        
 })
 
-export default createStore(RootReducer)
+export default createStore(RootReducer, applyMiddleware(thunk))
