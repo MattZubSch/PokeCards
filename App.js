@@ -1,11 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
-import BoosterPackNavigation from './src/navigation/BoosterPackNavigation'
-import { NavigationContainer } from '@react-navigation/native'
-import MainNavigation from './src/navigation'
+import MainNavigation from './src/navigation/MainNavigator'
 
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
-
+import MainNavigator from './src/navigation/MainNavigator'
 import { Provider } from 'react-redux'
 import store from './src/store'
 
@@ -19,11 +17,8 @@ export default function App() {
   if (!loaded) return <AppLoading />
   
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <MainNavigation />
-      </NavigationContainer>
-
+    <Provider store={store}> 
+      <MainNavigator />
     </Provider>
      
   );
@@ -38,5 +33,3 @@ const styles = StyleSheet.create({
   },
 });
 
-
-//https://pokecards-3239c-default-rtdb.firebaseio.com/

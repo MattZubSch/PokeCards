@@ -1,85 +1,181 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, TouchableOpacity, TextInput, Button  } from 'react-native'
-import React, {useState} from 'react'
-import { useDispatch } from 'react-redux'
-import { singup } from '../store/actions/auth.action'
-import ImageSelector from '../components/ImageSelector'
-
-const AuthScreen = () => {
-    
-    const dispatch = useDispatch();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handlerSingUp = () => {
-        dispatch(singup(email, password))
+import {
+    KeyboardAvoidingView,
+    StyleSheet,
+    Text,
+    View,
+    Button,
+    Alert,
+  } from "react-native"
+  import React, { useCallback, useReducer, useEffect } from "react"
+  
+  import { Colors } from '../constants/Colors'
+  import { useDispatch } from "react-redux"
+  import { useState } from "react"
+  import { signUp } from "../store/actions/auth.action"
+  import Input from "../components/Input"
+  
+  const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE"
+  
+  const formReducer = (state, action) => {
+    console.log(action)
+    if (action.type === FORM_INPUT_UPDATE) {
+      const updatedValues = {
+        ...state.inputValues,
+        [action.input]: action.value,
+      }
+      const updatedValidities = {
+        ...state.inputValidities,
+        [action.input]: action.isValid,
+      }
+      let updatedFormIsValid = true
+      for (const key in updatedValidities) {
+        updatedFormIsValid = updatedFormIsValid && updatedValidities[key]
+      }
+      return {
+        inputValues: updatedValues,
+        inputValidities: updatedValidities,
+        formIsValid: updatedFormIsValid,
+      }
     }
-
-  return (
-    <KeyboardAvoidingView behavior='height' style={styles.screen}>
+    return state
+  }
+  
+  const AuthScreen = ({navigation}) => {
+    const dispatch = useDispatch()
+    const [error, setError] = useState(null)
+  
+    useEffect(() => {
+      if (error) {
+        Alert.alert("A ocurrido un error", error, [{ text: "Ok" }])
+      }
+    }, [error])
+  
+    const [formState, dispatchFormState] = useReducer(formReducer, {
+      inputValues: {
+        email: "",
+        password: "",
+      },
+      inputValidities: {
+        email: false,
+        password: false,
+      },
+      formIsValid: false,
+    })
+  
+    const handleSignUp = () => {
+        console.log(formState.inputValues.email)
+      if (formState.formIsValid) {
+        dispatch(
+          signUp(formState.inputValues.email, formState.inputValues.password)
+        )
+      } else {
+        Alert.alert("formulaio invalido", "Ingresa email y usuario valido", [
+          { text: "ok" },
+        ])
+      }
+    }
+  
+    const onInputChangeHandler = useCallback(
+      (inputIdentifier, inputValue, inputValidity) => {
+        console.log(inputIdentifier, inputValue, inputValidity)
+        dispatchFormState({
+          type: FORM_INPUT_UPDATE,
+          value: inputValue,
+          isValid: inputValidity,
+          input: inputIdentifier,
+        })
+      },
+      [dispatchFormState]
+    )
+  
+    return (
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={50}
+        style={styles.screen}
+      >
         <View style={styles.container}>
-          <Text style={styles.title}>Registro</Text>
-          <Text>E-Mail</Text>
-          <TextInput 
-          keyboardType='email-address' 
-          autoCapitalize='none' 
-          value={email} 
-          onChangeText={setEmail}/>
-          <Text>Password</Text>
-          <TextInput 
-          secureTextEntry 
-          autoCapitalize='none'
-          value={password}
-          onChangeText={setPassword}/>
-          <Button 
-          title='Registrarse'
-          onPress={handlerSingUp}></Button>
-            <View style={styles.prompt}>
-                <Text style={styles.promptMessage}>Ya tienes una cuenta?</Text>
-                <TouchableOpacity onPress={() => console.log('ingresar')}>
-                    <Text style={styles.promptButton}>Ingresar</Text>
-                </TouchableOpacity>
+          <Text style={styles.title}>LOGIN</Text>
+          <View>
+            <Input
+              id="email"
+              label="Email"
+              keyboardType="email-address"
+              required
+              email
+              autoCapitalize="none"
+              errorText="Por favor ingrese un email valido"
+              onInputChange={onInputChangeHandler}
+              initialValue=""
+            />
+            <Input
+              id="password"
+              label="Password"
+              keyboardType="default"
+              required
+              password
+              secureTextEntry
+              autoCapitalize="none"
+              errorText="Por favor ingrese una contrasena valida"
+              onInputChange={onInputChangeHandler}
+              initialValue=""
+            />
+          </View>
+          <View style={styles.footer}>
+            <View style={styles.button}>
+              <Button
+                //title={isSingUp ? "REGISTRARME" : "LOGIN"}
+                title="Test"
+                // color={Colors.primary}
+                onPress={handleSignUp}
+              />
             </View>
-            <ImageSelector onImage={image => console.log(image)} />
+            <View>
+              {/* <Button
+                //title={`Cambiar a ${!isSingUp ? "Registrame" : "Login"}`}
+                title="Test"
+                // color={Colors.primary}
+                //onPress={() => setIsSingUp((prevState) => !prevState)}
+              /> */}
+            </View>
+          </View>
         </View>
-    </KeyboardAvoidingView>
-  )
-}
-
-export default AuthScreen
-
-const styles = StyleSheet.create({
+      </KeyboardAvoidingView>
+    )
+  }
+  
+  export default AuthScreen
+  
+  const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    container: {
-        width: '80%',
-        maxWidth: 400,
-        padding: 12,
-        margin: 12,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: 'white'
+      flex: 1,
+      backgroundColor: "grey",
+      justifyContent: "center",
+      alignItems: "center",
     },
     title: {
-        fontSize: 24, 
-        marginBottom: 18, 
-        textAlign: 'center'
+      fontSize: 24,
+      //fontFamily: "open-sans-bold",
+      marginBottom: 18,
     },
-    prompt: {
-        alignItems: 'center'
+    container: {
+      width: "80%",
+      maxWidth: 400,
+      backgroundColor: "#fff",
+      height: "50%",
+      maxHeight: 400,
+      padding: 12,
     },
-    promptMessage: {
-        fontSize: 16,
-        color: '#333'
-    },
-    promptButton: {
-        fontSize: 16
+    footer: {
+      marginTop: 42,
     },
     button: {
-        backgroundColor: 'lightblue',
-        marginTop: 20
-    }
-})
+      marginBottom: 8,
+    },
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+    },
+  })

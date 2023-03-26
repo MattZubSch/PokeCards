@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator()
 
 const BoosterPackNavigation = () => {
     return (
-        <NavigationContainer>
+      
             <Stack.Navigator initialRouteName='Home'
             >
                 <Stack.Screen name='Home' component={HomeScreen} options={{
@@ -18,7 +18,7 @@ const BoosterPackNavigation = () => {
                 <Stack.Screen name='BoosterPackScreen' component={BoosterPackScreen} />
                 <Stack.Screen name='OpenPackScreen' component={OpenPackScreen} />
             </Stack.Navigator>
-        </NavigationContainer>
+     
 
 )};
 

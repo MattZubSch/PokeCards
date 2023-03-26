@@ -105,7 +105,6 @@ touchableContainer: {
   width: '90%',
 },
 text: {
-  text: {
     fontFamily: "GothicNewMedium",
     fontSize: 36,
     justifyContent: 'center',
@@ -116,4 +115,4 @@ text: {
     padding: 5
   }
 
-}})
+})
