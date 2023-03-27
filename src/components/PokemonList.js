@@ -1,10 +1,10 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, Dimensions } from 'react-native'
 
 import Card from './Card'
 import Colors from '../constants/Colors'
 import React from 'react'
 
-const PokemonCard = ({item}) => {
+const PokemonList = ({item}) => {
     
 
   return (
@@ -31,7 +31,7 @@ const PokemonCard = ({item}) => {
   )
 }
 
-export default PokemonCard
+export default PokemonList
 
 const styles = StyleSheet.create({
     container: {
@@ -44,16 +44,20 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderRadius: 10,
         borderWidth: 1,
-        marginLeft: 10,
-        marginRight: 10,
+        // marginLeft: 10,
+        // marginRight: 10,
+        margin: 10
     },
     imgContainer: {
-        width: 300,
-        height: 300
+        width: Dimensions.get('window').width / 4,
+        height: Dimensions.get('window').height / 8
     },
     img: {
-        width: '100%',
-        height: '100%'
+        width: "100%",
+        height: "100%",
+        padding: 10 
+        // width: Dimensions.get('window').width / 5,
+        // height: Dimensions.get('window').height / 6
     },
     cardContainer: {
         margin: 3,
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       titleText: {
-        fontSize: 32,
+        fontSize: 16,
         fontFamily: "GothicNewBold"
       }
 })

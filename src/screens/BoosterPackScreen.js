@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { clearPack, multipleCards, selectedCards } from '../store/actions/packScreen.action'
+import { cardsObtained } from '../store/actions/cardList.action'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Card from '../components/Card'
@@ -38,6 +39,7 @@ const BoosterPackScreen = ({navigation}) => {
       for (let i = 0; i < idRandom.length; i++){
         dispatch(multipleCards(idRandom[i]))
       }
+      dispatch(cardsObtained(idRandom))
       navigation.navigate('OpenPackScreen') 
   } 
          

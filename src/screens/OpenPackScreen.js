@@ -1,13 +1,15 @@
 import { FlatList, StyleSheet, View } from 'react-native'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import PokemonCard from '../components/PokemonCard'
-import { selectedCards } from '../store/actions/packScreen.action'
 
 const OpenPackScreen = () => {
 
   const packFiltered = useSelector(state => state.packScreen.selected)
+  const cardList = useSelector(state => state.obtainedCards.obtainedCards)
+
+  console.log(cardList)
 
 
   const renderPokemonCards = ({ item }) => (
@@ -52,5 +54,5 @@ const styles = StyleSheet.create({
         padding: 50,
         //paddingBottom: 0,
         //paddingTop: 0
-      },
+      }
 })

@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from '../screens/HomeScreen'
 import BoosterPackScreen from '../screens/BoosterPackScreen'
 import OpenPackScreen from '../screens/OpenPackScreen'
+import CardListScreen from "../screens/CardListScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -14,9 +15,10 @@ const BoosterPackNavigation = () => {
             <Stack.Navigator initialRouteName='Home'
             >
                 <Stack.Screen name='Home' component={HomeScreen} options={{
-                    title: "Pokecards"}}/>
+                    title: "PokeCards"}}/>
                 <Stack.Screen name='BoosterPackScreen' component={BoosterPackScreen} />
                 <Stack.Screen name='OpenPackScreen' component={OpenPackScreen} />
+                <Stack.Screen name='List' component={CardListScreen} />
             </Stack.Navigator>
      
 

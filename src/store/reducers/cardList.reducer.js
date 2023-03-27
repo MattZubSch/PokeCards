@@ -1,26 +1,23 @@
 import { POKEMONS } from "../../data/pokemon";
-import { PACK_OBTAINED, CARDS_OBTAINED } from "../actions/cardList.action";
+import { CARDS_OBTAINED } from "../actions/cardList.action";
 
 const initialState = {
     cards: POKEMONS,
     obtainedCards: [],
-    obtainedPack: []
 }
 
 const CardListReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case PACK_OBTAINED:
-            let colectorIds = state.obtainedPack
-            
-            // for (let i = 0; i < action.packIds.length; i++) {
-            //     console.log(action.packIds[i])
-            //     if (!colectorIds.includes(action.packIds[i]) === false) {
-            //         colectorIds.push(action.packIds[i])
-            //     }
-            // }
-            return {...state, obtainedPack: colectorIds}      
+    switch (action.type) {    
         case CARDS_OBTAINED:
-        default:
+            let pack = action.cardIds
+            let colectedCards = state.obtainedCards
+            pack.forEach(function(id) {
+                if (!colectedCards.includes(id)) {
+                    colectedCards.push(id)
+                }
+            })
+            return {...state, obtainedCards: colectedCards}
+        default: 
             return state;
     }
 }

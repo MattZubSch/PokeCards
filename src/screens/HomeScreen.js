@@ -1,42 +1,16 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
 import React from 'react'
-import { URL_AUTH_API } from '../constants/Database'
-
 import Card from '../components/Card'
 import Colors from '../constants/Colors'
 
-// Crea una función que obtenga los datos de Firebase
-async function getDataFromFirebase() {
-  console.log("4")
-  try {
-    // Obtiene los datos de Firebase utilizando la función fetch()
-    const response = await fetch(`${URL_AUTH_API}/auth.json`);
-      console.log(response)
-    // Si la respuesta es correcta, convierte los datos a formato JSON
-    if (response.ok) {
-      console.log("first")
-      const data = await response.json();
-      console.log(data)
-      // Itera sobre los documentos de la colección y muestra los datos en la consola
-      // Object.keys(data).forEach((key) => {
-      //   console.log(`${key} => ${data[key]}`);
-      // });
-    } 
-  } catch (error) {
-    console.log("Error getting documents: ", error);
-  }
-}
-
-// Llama a la función para obtener los datos de Firebase
-// getDataFromFirebase();
-
+import { pokedex } from '../../App'
 
 const HomeScreen = ({navigation}) => {
-
+  console.log(pokedex.pokemon(150))
+ 
   return (
     <ScrollView>
       <View style={styles.container}>
-        {/* <Header title={'PokeCards'}/> */}
             <TouchableOpacity
             style={styles.touchableContainer}
             onPress={() => {navigation.navigate('BoosterPackScreen')}}>
@@ -44,14 +18,16 @@ const HomeScreen = ({navigation}) => {
               <Text style={styles.text}>Comprar Sobres</Text>
           </Card>
             </TouchableOpacity>
-            <TouchableHighlight style={styles.touchableContainer}>
+            <TouchableOpacity 
+            style={styles.touchableContainer}
+            onPress={() => {navigation.navigate('List')}}>
           <Card style={styles.cardContainer}>
               <Text style={styles.text}>Lista de Cartas</Text>
           </Card>
-            </TouchableHighlight>
+            </TouchableOpacity>
             <TouchableOpacity 
             style={styles.touchableContainer}
-            onPress={getDataFromFirebase}>
+            >
           <Card style={styles.cardUncomming}>
               <Text style={styles.text}>Tiendas de Cartas</Text>
           </Card>

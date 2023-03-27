@@ -1,12 +1,17 @@
-import { POKEMONS } from "../../data/pokemon";
+import { ReactReduxContext } from "react-redux";
+import { POKEMON } from "../actions/pokemon.action";
 
 const initialState = {
-    pokemons: POKEMONS,
-    selected: null
+    pokemons: null
 }
 
 const PokemonsReducer = (state = initialState, action) => {
-    return state
+    switch (action.type) {
+        case POKEMON:
+            return {...state, pokemons: action.pokes}
+        default:
+            return state
+    }
 }
 
 export default PokemonsReducer
