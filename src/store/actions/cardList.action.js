@@ -38,25 +38,6 @@ export const saveCards = (id) => {
                 image,
                 types
             )
-        try{
-            const load = await fetch(`${URL_API}cards.json`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application.json'
-                },
-                body: JSON.stringify({
-                    ids,
-                    name,
-                    image,
-                    types
-                })
-            })
-
-            const loaded = await load.json()
-            console.log(loaded)
-        } catch (err) {
-            throw err
-        }
 
 
     
