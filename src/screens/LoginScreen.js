@@ -3,94 +3,10 @@ import React, {useCallback, useReducer, useState, useEffect} from 'react'
 import Input from '../components/Input'
 import Card from '../components/Card'
 import { logIn } from '../store/actions/login.action'
-import { useDispatch } from 'react-redux'
-import { URL_LOGIN_API } from '../constants/Database'
+import { useDispatch, useSelector } from 'react-redux'
 
-// const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE"
+import * as loginAction from '../store/actions/login.action'
 
-// const formReducer = (state, action) => {
-//     console.log(action)
-//     if (action.type === FORM_INPUT_UPDATE) {
-//       const updatedValues = {
-//         ...state.inputValues,
-//         [action.input]: action.value,
-//       }
-//       const updatedValidities = {
-//         ...state.inputValidities,
-//         [action.input]: action.isValid,
-//       }
-//       let updatedFormIsValid = true
-//       for (const key in updatedValidities) {
-//         updatedFormIsValid = updatedFormIsValid && updatedValidities[key]
-//       }
-//       return {
-//         inputValues: updatedValues,
-//         inputValidities: updatedValidities,
-//         formIsValid: updatedFormIsValid,
-//       }
-//     }
-//     return state
-//   }
-
-// const LoginScreen = ({navigation}) => {
-//   const dispatch = useDispatch
-
-//   const [formState, dispatchFormState] = useReducer(formReducer, {
-//     inputValues: {
-//       email: "",
-//       password: "",
-//     },
-//     inputValidities: {
-//       email: false,
-//       password: false,
-//     },
-//     formIsValid: false,
-//   })
-
-// async function getUsers(email, password) {
-//   try{
-//     const response = await fetch(URL_LOGIN_API, {
-//       method: "POST",
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         email,
-//         password,
-//         returnSecureToken: true,
-//       }),
-//     })
-//     const result = await response.json()
-//     console.log(result)
-//   }catch (error) {
-//     console.log(error)
-// }}
-
-//   const handlerLogIn = () =>{
-//     if (formState.formIsValid) {
-//       dispatch(
-//         logIn(formState.inputValues.email, formState.inputValues.password)
-//       )
-//     } else {
-//       Alert.alert("formulaio invalido", "Ingresa email y usuario valido", [
-//         { text: "ok" },
-//       ])
-//     }
-//   }
-
-
-//     const onInputChangeHandler = useCallback(
-//         (inputIdentifier, inputValue, inputValidity) => {
-//           // console.log(inputIdentifier, inputValue, inputValidity)
-//           dispatchFormState({
-//             type: FORM_INPUT_UPDATE,
-//             value: inputValue,
-//             isValid: inputValidity,
-//             input: inputIdentifier,
-//           })
-//         },
-//         [dispatchFormState]
-//       )
 
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE"
@@ -121,13 +37,15 @@ const formReducer = (state, action) => {
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch()
-  const [error, setError] = useState(null)
+  const userid = useSelector(state => state.login.userId)
+  
+  
 
   useEffect(() => {
-    if (error) {
-      Alert.alert("A ocurrido un error", error, [{ text: "Ok" }])
-    }
-  }, [error])
+    dispatch(loginAction.loadUser())
+  }, [])
+
+  console.log('id ' + userid)
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -142,7 +60,6 @@ const LoginScreen = ({navigation}) => {
   })
 
   const handlerLogIn = () => {
-      console.log(formState.inputValues.email)
     if (formState.formIsValid) {
       dispatch(
         logIn(formState.inputValues.email, formState.inputValues.password)
@@ -156,7 +73,6 @@ const LoginScreen = ({navigation}) => {
 
   const onInputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
-      console.log(inputIdentifier, inputValue, inputValidity)
       dispatchFormState({
         type: FORM_INPUT_UPDATE,
         value: inputValue,

@@ -1,12 +1,28 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import Colors from '../constants/Colors'
-
-import { POKEMONS } from '../data/pokemon'
+import { useDispatch, useSelector } from 'react-redux'
+import * as cardListAction from '../store/actions/cardList.action'
 
 const HomeScreen = ({navigation}) => {
- 
+  const dispatch = useDispatch()
+  const [loadingCards, setLoadingCards] = useState(true)
+
+  useEffect(() => {
+    dispatch(cardListAction.loadCards())
+    setLoadingCards(false)
+  },[]) 
+
+   
+  const cardsList = useSelector(state => state.obtainedCards.obtainedCards)
+
+  if (!loadingCards) {
+    if (cardsList.length < 1) {
+      console.log('Sin datos guardados')
+    }
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>

@@ -1,7 +1,9 @@
 import { URL_LOGIN_API, URL_AUTH_API } from "../../constants/Database";
 import { Alert } from "react-native";
+import { insertUserId, fetchUserId } from "../../db";
 
 export const LOGIN = 'LOGIN'
+export const LOAD_USER = 'LOAD_USER'
 
 export const logIn = (email, password) => {
     console.log(email, password)
@@ -20,7 +22,6 @@ export const logIn = (email, password) => {
         })
   
         const resData = await response.json()
-        console.log(resData)
         
         if (!response.ok) {
             const errorID = resData.error.message;
@@ -33,12 +34,19 @@ export const logIn = (email, password) => {
             throw new Error(message)
         }
   
-        
+      const token = resData.idToken;
+
+      const userId = resData.localId;
+
+      const result = await insertUserId(
+        userId,
+        token 
+      )
+      console.log(result)
   
         dispatch({
           type: LOGIN,
-          token: resData.idToken,
-          userId: resData.localId,
+          payload: {id: result.insertId, userId, token}
         })
       } catch (message) {
         return (
@@ -48,3 +56,15 @@ export const logIn = (email, password) => {
       }
     }
   }
+
+export const loadUser = () => {
+  return async (dispatch) => {
+    try{
+      const result = await fetchUserId()
+      console.log(result)
+      dispatch({type: LOAD_USER, payload: result.rows._array})
+    } catch (err) {
+      throw err
+    }
+  }
+}

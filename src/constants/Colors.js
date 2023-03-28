@@ -1,6 +1,6 @@
 export default {
     primary: 'lightblue',
-    grass: '#23a03d ',
+    grass: '#23a03d',
     fire: '#ff862a',
     water: '#1a88d2',
     flying: '#8eb5e3',

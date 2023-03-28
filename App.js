@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import MainNavigation from './src/navigation/MainNavigator'
 
-import { useState, useEffect } from 'react'
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
 import MainNavigator from './src/navigation/MainNavigator'
 import { Provider } from 'react-redux'
 import store from './src/store'
+
+import { init } from './src/db'
 
 export default function App() {
   const [loaded] = useFonts({
@@ -15,7 +15,12 @@ export default function App() {
     GothicNewBold: require('./assets/fonts/Zen_Kaku_Gothic_New/ZenKakuGothicNew-Bold.ttf'),
   })
 
-
+  init()
+    .then(() => console.log('Database Initialized'))
+    .catch((err) => {
+      console.log('Database failed to connect')
+      console.log(err.message)
+    })
  
   if (!loaded) {
     return <AppLoading />

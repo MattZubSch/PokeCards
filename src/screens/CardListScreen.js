@@ -96,9 +96,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: "black",
-    // padding: 50,
-    //paddingBottom: 0,
-    //paddingTop: 0
   },
   buttonContainer: {
     flexDirection: 'row',

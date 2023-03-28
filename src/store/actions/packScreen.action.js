@@ -25,8 +25,8 @@ export const createCards = (id) => {
         throw new Error("No se ha podido conectar con el servidor");
 
         const resData = await response.json();
-        console.log(resData.id)
-        console.log(resData.name.toUpperCase())
+
+
 
         dispatch({
             type: CREATE_CARDS,
@@ -34,7 +34,7 @@ export const createCards = (id) => {
                 id: resData.id,
                 name: resData.name.toUpperCase(),
                 image: resData.sprites.front_default,
-                types: resData.types,
+                types: resData.types
             }
         })
 }}

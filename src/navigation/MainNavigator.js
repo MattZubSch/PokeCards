@@ -1,6 +1,5 @@
 import BoosterPackNavigation from "./BoosterPackNavigation";
 import AuthNavigator from "./AuthNavigator";
-import CardListNavigator from "./CardListNavigator";
 
 import React from "react";
 import { useSelector } from "react-redux";
@@ -15,7 +14,7 @@ const MainNavigator = () => {
         <NavigationContainer>
          {userId || userNewId
          ? <BoosterPackNavigation /> 
-         : <BoosterPackNavigation />}
+         : <AuthNavigator />}
         </NavigationContainer>
     )
 }

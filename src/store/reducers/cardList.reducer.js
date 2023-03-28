@@ -1,4 +1,4 @@
-import { CARDS_OBTAINED, SAVE_CARDS } from "../actions/cardList.action";
+import { CARDS_OBTAINED, SAVE_CARDS, LOAD_CARDS } from "../actions/cardList.action";
 import Pokemon from "../../models/pokemon";
 
 const initialState = {
@@ -24,6 +24,16 @@ const CardListReducer = (state = initialState, action) => {
             return {
                 ...state,
                 obtainedCards: state.obtainedCards.concat(newPokemon)
+            }
+        case LOAD_CARDS:
+            return {
+                ...state,
+                obtainedCards: action.payload.map(item => new Pokemon(
+                    item.id,
+                    item.name,
+                    item.image,
+                    item.types
+                ))
             }
         default: 
             return state;

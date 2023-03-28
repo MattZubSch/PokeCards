@@ -1,8 +1,8 @@
-import { LOGIN } from "../actions/login.action";
+import { LOGIN, LOAD_USER } from "../actions/login.action";
 
 const initialState = {
+    userId: null,
     token: null,
-    userId: null
 }
 
 const LoginReducer = (state = initialState, action) => {
@@ -10,9 +10,20 @@ const LoginReducer = (state = initialState, action) => {
         case LOGIN: 
         return {
             ...state,
-            token: action.token,
-            userId: action.userId
+            userId: action.payload.userId,
+            token: action.payload.token,
           } 
+        case LOAD_USER:
+            if (action.payload.length === 0) {
+                return state
+            }
+            const id = action.payload.map(item => item.userId)
+            const tok = action.payload.map(item => item.token) 
+            return {
+                ...state,
+                userId: id,
+                token: tok,
+            }
         default:
             return state
     }

@@ -1,8 +1,7 @@
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native'
 
-import React, {useState, useEffect} from 'react'
-import Card from './Card'
-import Colors from '../constants/Colors'
+import React from 'react'
+
 
 const PokemonList = ({item}) => {
 
@@ -22,23 +21,6 @@ const PokemonList = ({item}) => {
         <View>
             <Text>#{item.id}</Text>
         </View>
-        {item.types.length === 1 && (
-                <View>
-                    <Card style={{...styles.cardContainer, ...{backgroundColor: Colors.dragon}}}>
-                        <Text style={styles.typeText}>{item.types[0].type.name}</Text>
-                    </Card>
-                </View>
-            )}
-            {item.types.length === 2 && (
-                <View style={styles.typeContainer}>
-                    <Card style={{...styles.cardContainer, ...{backgroundColor: Colors.dragon}}}>
-                        <Text style={styles.typeText}>{item.types[0].type.name}</Text>
-                    </Card>
-                    <Card style={{...styles.cardContainer, ...{backgroundColor: Colors.dragon}}}>
-                        <Text style={styles.typeText}>{item.types[1].type.name}</Text>
-                    </Card>
-                </View>
-            )}
     </View>
   )
 }
@@ -57,8 +39,6 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderRadius: 10,
         borderWidth: 1,
-        // marginLeft: 10,
-        // marginRight: 10,
         margin: 10
     },
     imgContainer: {

@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { clearPack, multipleCards, selectedCards } from '../store/actions/packScreen.action'
+import { clearPack, multipleCards } from '../store/actions/packScreen.action'
 import { cardsObtained, saveCards } from '../store/actions/cardList.action'
 import { useDispatch, useSelector } from 'react-redux'
 // import { POKEMONS } from '../data/pokemon'
@@ -10,11 +10,9 @@ import Card from '../components/Card'
 const BoosterPackScreen = ({navigation}) => {
 
   const dispatch = useDispatch()
-  // const pokemons = useSelector(state => state.packScreen.packs)
-  const packFiltered = useSelector(state => state.packScreen.selected)
+
   const cardsList = useSelector(state => state.obtainedCards.obtainedIds)
   const cardsLoaded = useSelector(state => state.packScreen.openCards)
-
 
   const generateRandom = () => { 
     return Math.floor(Math.random() * 649).toString()
