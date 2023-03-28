@@ -9,11 +9,11 @@ import PokemonsReducer from "./reducers/pokemon.reducer"
 import LoginReducer from "./reducers/login.reducer";
 
 const RootReducer = combineReducers ({
-    packScreen: PackScreenReducer,
     obtainedCards: CardListReducer,
+    pokemons: PokemonsReducer,
+    packScreen: PackScreenReducer,
     auth: AuthReducer,
     login: LoginReducer,
-    pokemons: PokemonsReducer,
 })
 
 export default createStore(RootReducer, applyMiddleware(thunk))

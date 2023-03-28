@@ -3,8 +3,6 @@ import React, {useState} from 'react'
 import PokemonList from '../components/PokemonList'
 import { useSelector } from 'react-redux'
 
-import { POKEMONS } from '../data/pokemon'
-
 const CardListScreen = () => {
 
   const cardReducer = useSelector(state => state.obtainedCards.obtainedCards)
@@ -14,22 +12,8 @@ const CardListScreen = () => {
   const [pageSize, setPageSize] = useState(INITIAL_PAGE_SIZE);
   const [numPage, setNumPage] = useState(1)
   
-  const cardsObtained = () => {
-    let list = cardReducer
-    if (list.length === 0) {
-      return -1
-    }
-    let cardsToRender = []
-    for (let i = 0; i < list.length; i++) {
-      cardsToRender.push(POKEMONS[list[i]]);
-    }
-    return cardsToRender
-  }
 
-  const cards = cardsObtained()
-  console.log(cardReducer)
-
-  if (cards === -1) {
+  if (cardReducer.length < 1) {
     return (
       <View>
         <Text>Aun no tienes cartas</Text>
@@ -55,12 +39,12 @@ const CardListScreen = () => {
     setNumPage(numPage - 1)
   };
 
-  let pageTotal = Math.ceil(cards.length / INITIAL_PAGE_SIZE)
+  let pageTotal = Math.ceil(cardReducer.length / INITIAL_PAGE_SIZE)
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={cards.slice(initialPage, pageSize)}
+        data={cardReducer.slice(initialPage, pageSize)}
         renderItem={renderPokemonList}
         keyExtractor={item => item.id}
         horizontal={false}
@@ -85,14 +69,14 @@ const CardListScreen = () => {
         <Text style={styles.indexText}>Pagina</Text>
         <Text style={styles.indexText}>{numPage} de {pageTotal}</Text>
       </View>
-      {pageSize < cards.length && (
+      {pageSize < cardReducer.length && (
           <Button 
           title="→" 
           onPress={handleLoadMore}
           style={styles.button}  
           />
       )}
-      {pageSize > cards.length && (
+      {pageSize > cardReducer.length && (
         <Button 
         title="→"  
         color={'grey'}

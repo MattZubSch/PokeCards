@@ -1,12 +1,12 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
+import React, {useState, useEffect} from 'react'
+// import { useSelector } from 'react-redux' 
 
 import Card from './Card'
 import Colors from '../constants/Colors'
-import React from 'react'
 
 const PokemonCard = ({item}) => {
     
-
   return (
     <View style={styles.container}>
         <View>
@@ -16,20 +16,33 @@ const PokemonCard = ({item}) => {
             <Image 
             style={styles.img}
             source={{
-                uri: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/'+item.pokedexNum+'.png'
+                uri: item.image
             }}/>
         </View>
         <View>
-            <Text>#{item.pokedexNum}</Text>
+            <Text>#{item.id}</Text>
         </View>
-        <View>
-            <Card style={{...styles.cardContainer, ...{backgroundColor: item.colorType}}}>
-                <Text>{item.type}</Text>
-            </Card>
-        </View>
+            {item.types.length === 1 && (
+                <View>
+                    <Card style={styles.cardContainer}>
+                        <Text style={styles.typeText}>{item.types[0].type.name}</Text>
+                    </Card>
+                </View>
+            )}
+            {item.types.length === 2 && (
+                <View style={styles.typeContainer}>
+                    <Card style={styles.cardContainer}>
+                        <Text style={styles.typeText}>{item.types[0].type.name}</Text>
+                    </Card>
+                    <Card style={styles.cardContainer}>
+                        <Text style={styles.typeText}>{item.types[1].type.name}</Text>
+                    </Card>
+                </View>
+            )}
     </View>
-  )
+  )    
 }
+// }
 
 export default PokemonCard
 
@@ -56,17 +69,24 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     cardContainer: {
-        margin: 3,
+        margin: 10,
         padding: 5,
         shadowColor: 'black',
-        flexDirection: "row",
+        // flexDirection: "row",
         marginTop: 10,
         marginBottom: 10,
-        alignItems: "center",
-        justifyContent: 'center',
+        alignItems: "space-between",
+        // justifyContent: 'space-between',
       },
       titleText: {
         fontSize: 32,
-        fontFamily: "GothicNewBold"
+        fontFamily: "GothicNewRegular"
+      },
+      typeText: {
+        // alignContent: 'space-between'
+        margin: 10,
+      },
+      typeContainer: {
+        flexDirection: "row",
       }
 })

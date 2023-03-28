@@ -1,31 +1,39 @@
-import { CLEAR_PACK, MULTIPLE_CARDS, SELECT_CARDS } from "../actions/packScreen.action";
-
-import { POKEMONS } from "../../data/pokemon";
+import { CLEAR_PACK, MULTIPLE_CARDS, SELECT_CARDS, CREATE_CARDS } from "../actions/packScreen.action";
+import Pokemon from "../../models/pokemon";
 
 const initialState = {
-    packs: POKEMONS,
     selected: [],
+    openCards: [],
 }
  
 const PackScreenReducer = (state = initialState, action) => {
     switch (action.type) {
         case SELECT_CARDS:
-            const IndexCard = state.packs.findIndex(card => card.id === action.pokemonId)
-            if (IndexCard === -1) return state 
-            return {...state,
-                selected: state.packs[IndexCard]
-                }
+            return {
+                ...state,
+                selected: action.pokeId,
+            }
         case CLEAR_PACK:
             return {...state,
-                selected: []
+                selected: [],
+                openCards: [],
                 }
         case MULTIPLE_CARDS:
-            const IndexCards = state.packs.findIndex(card => card.id === action.pokeMultId)
-            if (IndexCard === -1) return state 
-            const addCard = [...state.selected, state.packs[IndexCards]]
+            const addCard = [...state.selected, action.pokeMultId]
             return {...state,
                 selected: addCard
                 }
+        case CREATE_CARDS:
+            const newPokemon = new Pokemon(
+                action.payload.id,
+                action.payload.name,
+                action.payload.image,
+                action.payload.types
+            )
+            return {
+                ...state,
+                openCards: state.openCards.concat(newPokemon)
+            }
         default:
             return state
 } 

@@ -1,22 +1,30 @@
-import { POKEMONS } from "../../data/pokemon";
-import { CARDS_OBTAINED } from "../actions/cardList.action";
+import { CARDS_OBTAINED, SAVE_CARDS } from "../actions/cardList.action";
+import Pokemon from "../../models/pokemon";
 
 const initialState = {
-    cards: POKEMONS,
+    obtainedIds: [],
     obtainedCards: [],
 }
 
 const CardListReducer = (state = initialState, action) => {
     switch (action.type) {    
         case CARDS_OBTAINED:
-            let pack = action.cardIds
-            let colectedCards = state.obtainedCards
-            pack.forEach(function(id) {
-                if (!colectedCards.includes(id)) {
-                    colectedCards.push(id)
-                }
-            })
-            return {...state, obtainedCards: colectedCards}
+            const addId = [...state.obtainedIds, action.cardIds]
+            return {
+                ...state,
+                obtainedIds: addId
+            }
+        case SAVE_CARDS:
+            const newPokemon = new Pokemon(
+                action.payload.id,
+                action.payload.name,
+                action.payload.image,
+                action.payload.types
+            )
+            return {
+                ...state,
+                obtainedCards: state.obtainedCards.concat(newPokemon)
+            }
         default: 
             return state;
     }

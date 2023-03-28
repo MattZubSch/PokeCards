@@ -3,10 +3,9 @@ import React from 'react'
 import Card from '../components/Card'
 import Colors from '../constants/Colors'
 
-import { pokedex } from '../../App'
+import { POKEMONS } from '../data/pokemon'
 
 const HomeScreen = ({navigation}) => {
-  console.log(pokedex.pokemon(150))
  
   return (
     <ScrollView>

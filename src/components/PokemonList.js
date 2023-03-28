@@ -1,11 +1,11 @@
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native'
 
+import React, {useState, useEffect} from 'react'
 import Card from './Card'
 import Colors from '../constants/Colors'
-import React from 'react'
 
 const PokemonList = ({item}) => {
-    
+
 
   return (
     <View style={styles.container}>
@@ -13,23 +13,36 @@ const PokemonList = ({item}) => {
             <Text style={styles.titleText}>{item.name}</Text>
         </View>
         <View style={styles.imgContainer}>
-            <Image 
+        <Image 
             style={styles.img}
             source={{
-                uri: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/'+item.pokedexNum+'.png'
+                uri: item.image
             }}/>
         </View>
         <View>
-            <Text>#{item.pokedexNum}</Text>
+            <Text>#{item.id}</Text>
         </View>
-        <View>
-            <Card style={{...styles.cardContainer, ...{backgroundColor: item.colorType}}}>
-                <Text>{item.type}</Text>
-            </Card>
-        </View>
+        {item.types.length === 1 && (
+                <View>
+                    <Card style={{...styles.cardContainer, ...{backgroundColor: Colors.dragon}}}>
+                        <Text style={styles.typeText}>{item.types[0].type.name}</Text>
+                    </Card>
+                </View>
+            )}
+            {item.types.length === 2 && (
+                <View style={styles.typeContainer}>
+                    <Card style={{...styles.cardContainer, ...{backgroundColor: Colors.dragon}}}>
+                        <Text style={styles.typeText}>{item.types[0].type.name}</Text>
+                    </Card>
+                    <Card style={{...styles.cardContainer, ...{backgroundColor: Colors.dragon}}}>
+                        <Text style={styles.typeText}>{item.types[1].type.name}</Text>
+                    </Card>
+                </View>
+            )}
     </View>
   )
 }
+
 
 export default PokemonList
 
@@ -72,5 +85,13 @@ const styles = StyleSheet.create({
       titleText: {
         fontSize: 16,
         fontFamily: "GothicNewBold"
+      },
+      typeText: {
+        // alignContent: 'space-between'
+        margin: 3,
+        color: 'white',
+      },
+      typeContainer: {
+        flexDirection: "row",
       }
 })

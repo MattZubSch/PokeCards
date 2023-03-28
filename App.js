@@ -8,9 +8,6 @@ import MainNavigator from './src/navigation/MainNavigator'
 import { Provider } from 'react-redux'
 import store from './src/store'
 
-const Pokedex = require('pokedex')
-export const pokedex = new Pokedex()
-
 export default function App() {
   const [loaded] = useFonts({
     GothicNewRegular: require('./assets/fonts/Zen_Kaku_Gothic_New/ZenKakuGothicNew-Regular.ttf'),

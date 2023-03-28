@@ -1,35 +1,30 @@
 import React, {useEffect} from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { clearPack, multipleCards, selectedCards } from '../store/actions/packScreen.action'
-import { cardsObtained } from '../store/actions/cardList.action'
+import { cardsObtained, saveCards } from '../store/actions/cardList.action'
 import { useDispatch, useSelector } from 'react-redux'
+// import { POKEMONS } from '../data/pokemon'
 
 import Card from '../components/Card'
 
 const BoosterPackScreen = ({navigation}) => {
 
   const dispatch = useDispatch()
-  const pokemons = useSelector(state => state.packScreen.packs)
+  // const pokemons = useSelector(state => state.packScreen.packs)
   const packFiltered = useSelector(state => state.packScreen.selected)
+  const cardsList = useSelector(state => state.obtainedCards.obtainedIds)
+  const cardsLoaded = useSelector(state => state.packScreen.openCards)
 
 
-  
   const generateRandom = () => { 
-    return Math.floor(Math.random() * (pokemons.length)).toString()
+    return Math.floor(Math.random() * 649).toString()
   }
-
-
-  const handlerOpenPack = () => {
-    dispatch(clearPack())
-    let sort = generateRandom()
-    dispatch(selectedCards(sort))
-    navigation.navigate('OpenPackScreen')
-  } 
   
-  const handlerX3Pack = () => {
+
+  const handlerPack = (length) => {
     dispatch(clearPack())
     let idRandom = []
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < length; i++) {
       let sort = generateRandom()
       if (idRandom.includes(sort)) {
         i--
@@ -38,23 +33,13 @@ const BoosterPackScreen = ({navigation}) => {
       }}
       for (let i = 0; i < idRandom.length; i++){
         dispatch(multipleCards(idRandom[i]))
+        if (!cardsList.includes(idRandom[i])) {
+          dispatch(cardsObtained(idRandom[i]))
+          dispatch(saveCards(idRandom[i]))
+        }
       }
-      dispatch(cardsObtained(idRandom))
       navigation.navigate('OpenPackScreen') 
   } 
-         
-    //   if (packFiltered.length === 0){
-    //     dispatch(multipleCards(sort))
-    //   } else {
-    //     let check = packFiltered.findIndex(card => card.id === sort)
-    //     console.log(check)
-    //     console.log(packFiltered) 
-    //     if (check === -1) {
-    //       dispatch(multipleCards(sort))
-    //     }
-    //   }
-    // }
-    // navigation.navigate('OpenPackScreen')
   
 
   return (
@@ -62,16 +47,23 @@ const BoosterPackScreen = ({navigation}) => {
       <View style={styles.container}>
         <TouchableOpacity 
         style={styles.touchableContainer}
-        onPress={handlerOpenPack}>
+        onPress={() => handlerPack(1)}>
           <Card style={styles.cardContainer}>
               <Text style={styles.text}>Sobre Gratuito</Text>
           </Card>
         </TouchableOpacity>
         <TouchableOpacity 
-        style={styles.touchableContainer}
-        onPress={handlerX3Pack}>
+        style={styles.touchableContainer} 
+        onPress={() => handlerPack(3)}>
           <Card style={styles.cardContainer}>
               <Text style={styles.text}>Sobre X3</Text>
+          </Card>
+        </TouchableOpacity>
+        <TouchableOpacity 
+        style={styles.touchableContainer}
+        onPress={() => {console.log(cardsLoaded)}}>
+          <Card style={styles.cardContainer}>
+              <Text style={styles.text}>Prueba</Text>
           </Card>
         </TouchableOpacity>
       </View>
